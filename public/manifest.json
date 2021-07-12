@@ -1,0 +1,16 @@
+{
+    "name": "OxeQfome Delivery",
+    "short_name": "OxeQfome",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "description": "Painel do OxeQfome",
+    "theme_color": "#ffffff",
+    "icons": [
+      {
+        "src": "./storage/app/public/179/Ativo-3%40300x.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ]
+  }

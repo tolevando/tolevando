@@ -1,0 +1,27 @@
+<?php 
+
+return [
+    'agree' => 'Eu concordo com os termos',
+    'failed' => 'Ops, email ou senha inválidos',
+    'throttle' => 'O número limite de tentativas de login foi atingido. Por favor tente novamente dentro de :seconds segundos.',
+    'login_title' => 'Acessar o sistema interno',
+    'email' => 'e-mail',
+    'password' => 'senha',
+    'remember_me' => 'Lembrar-se de mim',
+    'login' => 'Entrar',
+    'login_facebook' => 'Login com Facebook',
+    'login_google' => 'Login com Google',
+    'login_twitter' => 'Login com Twitter',
+    'forgot_password' => 'Esqueci minha Senha',
+    'register_new_member' => 'Registrar um novo Membro',
+    'reset_title' => 'Resetar',
+    'send_password' => 'Enviar Senha',
+    'remember_password' => 'Lembrei da Senha',
+    'reset_password_title' => 'Resetar a Senha',
+    'password_confirmation' => 'Confirmação de Senha',
+    'reset_password' => 'Resetar',
+    'name' => 'Nome',
+    'register' => 'Registrar',
+    'already_member' => 'Já sou um membro',
+    'logout' => 'Sair',
+];
