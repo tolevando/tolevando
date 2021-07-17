@@ -110,6 +110,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('markets', 'MarketController')->except([
         'show'
     ]);
+    Route::post('markets/opening_hours/delete', 'MarketController@deleteOpeningHours');
+    Route::post('markets/opening_hours/{id}', 'MarketController@saveOpeningHours');
 
     Route::post('categories/remove-media', 'CategoryController@removeMedia'); 
     Route::resource('categories', 'CategoryController')->except([

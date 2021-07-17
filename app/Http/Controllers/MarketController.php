@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
 use App\Models\Cidade;
 use App\Models\Bairro;
+use App\Models\OpeningHourMarket;
 
 class MarketController extends Controller
 {
@@ -395,5 +396,28 @@ class MarketController extends Controller
         }
 
         return $retornoArray;
+    }
+
+    public function saveOpeningHours($id, Request $request)
+    {
+        try {
+            OpeningHourMarket::updateOrCreate(['market_id' => $id, 'day' => $request->day], ['open_hour' => $request->open_hour, 'close_hour' => $request->close_hour, 'automatic_open_close' => $request->automatic_open_close]);
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Registro atualizado com sucesso!' ];
+    }
+
+    public function deleteOpeningHours(Request $request)
+    {
+        try {
+            $openingHour = OpeningHourMarket::find($request->id);
+            $openingHour->delete();
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Registro deletado com sucesso!' ];
     }
 }
