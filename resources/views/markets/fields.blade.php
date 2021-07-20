@@ -130,6 +130,25 @@
             </div>
         </div>
     </div>
+
+    <!-- Estimated Time Get Product Field -->
+    <div class="form-group row">
+        {!! Form::label('estimated_time_get_product', "Tempo estimado para retirada",['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('estimated_time_get_product', ['' => 'Selecione uma estimativa', '10-30 min' => '10-30 min', '30-50 min' => '30-50 min', '50-110 min' => '50-110 min', '130-160 min' => '130-160 min'], $market->estimated_time_get_product??null, ['class' => 'select2 form-control']) !!}
+            <div class="form-text text-muted">Selecione uma estimativa</div>
+        </div>
+    </div>
+
+    <!-- Estimated Time Delivery Field -->
+    <div class="form-group row">
+        {!! Form::label('estimated_time_delivery', "Tempo estimado para delivery",['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('estimated_time_delivery', ['' => 'Selecione uma estimativa', '10-30 min' => '10-30 min', '30-50 min' => '30-50 min', '50-110 min' => '50-110 min', '130-160 min' => '130-160 min'], $market->estimated_time_delivery??null, ['class' => 'select2 form-control']) !!}
+            <div class="form-text text-muted">Selecione uma estimativa</div>
+        </div>
+    </div>
+
     <!-- 'Boolean closed Field' -->
     <div class="form-group row ">
         {!! Form::label('closed', trans("lang.market_closed"),['class' => 'col-3 control-label text-right']) !!}
