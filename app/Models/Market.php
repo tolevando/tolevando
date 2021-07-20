@@ -83,6 +83,8 @@ class Market extends Model implements HasMedia
         'closed',
         'information',
         'active',
+        'estimated_time_get_product',
+        'estimated_time_delivery',
     ];
 
     /**
@@ -114,6 +116,8 @@ class Market extends Model implements HasMedia
         'pagarme_recipient_id' => 'string',
         'pagarme_recebedor_taxa_entrega' => 'boolean',
         'exige_agendamento' => 'boolean',
+        'estimated_time_get_product' => 'string',
+        'estimated_time_delivery' => 'string',
     ];
 
     /**
