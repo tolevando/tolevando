@@ -343,6 +343,7 @@
 
 </div>
 
+@if(isset($market))
 <div class="col-12 custom-field-container">
     <div style="flex: 90%;max-width: 50%;padding: 0 4px;" class="column">
         <h5 class="col-12 pb-4">Horário De Funcionamento</h5>
@@ -393,6 +394,7 @@
         </table>
     </div>
 </div>
+@endif
 
 
 <div class="col-12 custom-field-container">
@@ -530,8 +532,10 @@
                     <div class="form-group" id="divDay">
 
                         @php
-                            $selectDayWeek = \DB::table('opening_hour_markets')->where('market_id', $market->id)->pluck('day');
-                            $dayWeek = $selectDayWeek->toArray();
+                            if (isset($market)) {
+                                $selectDayWeek = \DB::table('opening_hour_markets')->where('market_id', $market->id)->pluck('day');
+                                $dayWeek = $selectDayWeek->toArray();
+                            }
                         @endphp
 
                         <label for="dayWeek">Dia da semana <span class="text-danger">*</span></label>
