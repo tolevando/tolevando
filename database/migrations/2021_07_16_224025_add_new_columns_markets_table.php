@@ -36,7 +36,7 @@ class AddNewColumnsMarketsTable extends Migration
                 $table->dropColumn('estimated_time_get_product');
             }
 
-            if (Schema::hasColumn('markets', 'estimated_time_get_product')) {
+            if (Schema::hasColumn('markets', 'estimated_time_delivery')) {
                 $table->dropColumn('estimated_time_delivery');
             }
         });
