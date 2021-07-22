@@ -25,6 +25,8 @@ class OpeningHourMarket extends Model
         'day',
         'open_hour',
         'close_hour',
+        'open_hour_second',
+        'close_hour_second',
         'automatic_open_close',
         'market_id'
     ];
