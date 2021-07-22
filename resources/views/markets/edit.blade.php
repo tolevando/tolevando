@@ -96,6 +96,8 @@
     var day = document.getElementById("day");
     var open_hour = document.getElementById("open_hour");
     var close_hour = document.getElementById("close_hour");
+    var open_hour_second = document.getElementById("open_hour_second");
+    var close_hour_second = document.getElementById("close_hour_second");
     var id_opening_hours = document.getElementById("id_opening_hours");
     var dayWeek = document.getElementById("dayWeek");
 
@@ -154,6 +156,45 @@
           return false;
     }
 
+    if (open_hour_second.value != ""){
+
+      if (open_hour_second.value <= close_hour.value){
+        Swal.fire({
+          // title: 'Error!',
+          text: 'A hora de abertura turno 2 deve ser maior que a hora de fechamento turno 1!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+            event.preventDefault();
+            return false;
+      }
+
+
+
+      if (close_hour_second.value == ""){
+        Swal.fire({
+          // title: 'Error!',
+          text: 'Necessário preencher a hora de fechamento turno 2!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        event.preventDefault();
+        return false;
+      }
+
+      if (close_hour_second.value <= open_hour_second.value){
+        Swal.fire({
+          // title: 'Error!',
+          text: 'A hora de fechamento turno 2 deve ser maior que a hora de abertura turno 2!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+            event.preventDefault();
+            return false;
+      }
+    }
+
+
     if($("#scales").prop('checked')){
       everyday.value = 1;
 
@@ -168,7 +209,7 @@
           headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
-          data: {'day': (dayWeek.value ? dayWeek.value : day.value), 'open_hour': open_hour.value, 'close_hour': close_hour.value, 'automatic_open_close': everyday.value},
+          data: {'day': (dayWeek.value ? dayWeek.value : day.value), 'open_hour': open_hour.value, 'close_hour': close_hour.value, 'open_hour_second': (open_hour_second.value ?? null ), 'close_hour_second': (close_hour_second.value ?? null), 'automatic_open_close': everyday.value},
           url: '{!! url('markets/opening_hours', ['id' => $market->id ]) !!}',
           success: function (data) {
             console.log("SUCCESS DATA:", data);
@@ -217,6 +258,8 @@
   function populateForm(data) {
     document.getElementById("open_hour").value = data.open_hour;
     document.getElementById("close_hour").value = data.close_hour;
+    document.getElementById("open_hour_second").value = data.open_hour_second;
+    document.getElementById("close_hour_second").value = data.close_hour_second;
     document.getElementById("id_opening_hours").value = data.id;
     document.getElementById("divDay").style.display="none";
     document.getElementById("divEditDay").style.display="block";

@@ -362,7 +362,9 @@
                 <tr>
                     <th width="200">Dia da Semana</th>
                     <th width="100">Horário de Abertura</th>
-                    <th width="100">Horário de Fechamento</th>                    
+                    <th width="100">Horário de Fechamento</th>
+                    <th width="100">Horário de Abertura Turno 2</th>
+                    <th width="100">Horário de Fechamento Turno 2</th>                
                     <th width="200">Abertura/Fechamento Automatizado</th>                    
                     <th width="80"></th>                    
                 </tr>
@@ -374,6 +376,8 @@
                             <td>{{ $hour->day }}</td>
                             <td>{{ $hour->open_hour }}</td>
                             <td>{{ $hour->close_hour }}</td>
+                            <td>{{ isset($hour->open_hour_second) ? $hour->open_hour_second : '-' }}</td>
+                            <td>{{ isset($hour->close_hour_second) ? $hour->close_hour_second : '-' }}</td>
                             <td>{{ $hour->automatic_open_close ? 'Sim' : 'Não' }}</td>
                             <td>
                                 <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" data-toggle="modal" data-target="#ticket_modal" onclick="populateForm({{$hour}})">
@@ -537,7 +541,9 @@
                                 $dayWeek = $selectDayWeek->toArray();
                             }
                         @endphp
-
+                        <div class="col-md-12" align="center">
+                            <label>Turno 1</label>
+                        </div>
                         <label for="dayWeek">Dia da semana <span class="text-danger">*</span></label>
                         <select class="form-control" id="day" name="day">
                             <option disabled="" selected="" value="">Selecione</option>
@@ -581,6 +587,19 @@
                     <div class="form-group">
                         <label>Horário de fechamento <span class="text-danger">*</span></label>
                         <input type="time" class="form-control mb-3" name="close_hour" id="close_hour" placeholder="Horário de fechamento"  step="1">
+                    </div>
+                    <div class="col-md-12" align="center">
+                        <label>Turno 2</label><br>
+                        <span class="text-danger">* Preencher somente se houver dois turnos</span>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Horário de abertura</label>
+                        <input type="time" class="form-control mb-3" name="open_hour_second" id="open_hour_second" placeholder="Horário de abertura"  step="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário de fechamento</label>
+                        <input type="time" class="form-control mb-3" name="close_hour_second" id="close_hour_second" placeholder="Horário de fechamento"  step="1">
                     </div>
                     <div class="form-group custom-control custom-checkbox box-client-mobile">
                         <input type="hidden" id="everyday" name="everyday" value="">

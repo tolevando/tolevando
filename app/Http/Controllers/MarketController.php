@@ -401,7 +401,7 @@ class MarketController extends Controller
     public function saveOpeningHours($id, Request $request)
     {
         try {
-            OpeningHourMarket::updateOrCreate(['market_id' => $id, 'day' => $request->day], ['open_hour' => $request->open_hour, 'close_hour' => $request->close_hour, 'automatic_open_close' => $request->automatic_open_close]);
+            OpeningHourMarket::updateOrCreate(['market_id' => $id, 'day' => $request->day], ['open_hour' => $request->open_hour, 'close_hour' => $request->close_hour, 'open_hour_second' => $request->open_hour_second, 'close_hour_second' => $request->close_hour_second, 'automatic_open_close' => $request->automatic_open_close]);
         } catch (\Exception $e) {
             return ['statusCode' => 500, 'msg' => $e->getMessage() ];
         }
