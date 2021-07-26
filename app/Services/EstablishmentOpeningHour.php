@@ -31,13 +31,13 @@ class EstablishmentOpeningHour {
                             $market->save();
                         }
                         
-                        if ($hour->open_hour_second < $date_actual->format('H:i:s')) {
+                        if ($hour->open_hour_second && ($hour->open_hour_second < $date_actual->format('H:i:s'))) {
                             $market->closed = 0;
                             $market->save();
                         }
 
 
-                        if ($hour->close_hour_second < $date_actual->format('H:i:s')) {
+                        if ($hour->close_hour_second && ($hour->close_hour_second < $date_actual->format('H:i:s'))) {
                             $market->closed = 1;
                             $market->save();
                         }
