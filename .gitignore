@@ -1,7 +1,7 @@
 /node_modules
-#/public/hot
-#/public/plugins
-#/public/storage
+/public/hot
+/public/plugins
+/public/storage
 /storage/*.key
 /storage/app/public
 /storage/app/public/*
