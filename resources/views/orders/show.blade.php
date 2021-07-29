@@ -40,6 +40,12 @@
               <a class="nav-link pt-1" href="javascript:void(0);" style="color: red!important;" data-toggle="modal" data-target="#reason_cancel_modal"><i class="fa fa-close" style="color: red!important;"></i> <b>Recusar</b></a>
             </li>
           @endif
+
+          @if(isset($order->order_status_id) && ($order->order_status_id != 1 && $order->order_status_id != 4 && $order->active != 0))
+            <li class="nav-item" style="white-space:nowrap">
+              <a class="nav-link pt-1"style="color: #28a745!important;" href="javascript:void(0);" id="goToDelivery"><i class="fa fa-motorcycle" style="color: #28a745!important;"></i> <b>Saiu para entrega</b></a>
+            </li>
+          @endif
           <li class="nav-item" style="white-space:nowrap">
             <a class="nav-link pt-1" href="{{route('orders.edit',[$order->id])}}"><i class="fa fa-edit"></i> Editar</a>
           </li>
@@ -377,6 +383,45 @@
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           data: {},
+          url: '{!! url('order/update_order_status', ['id' => $order->id ]) !!}',
+          success: function (data) {
+            console.log("SUCCESS DATA:", data);
+
+            if (data.statusCode == '200') {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: data.msg,
+                showConfirmButton: false,
+                timer: 1000
+              });
+
+              window.location.reload(true);
+              return true;
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Erro ao atualizar registro',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          },
+          error: function (err) {
+              console.log('ERROR: ', err);
+          }
+      });
+    });
+
+    $("#goToDelivery").on("click",function () {
+      $.ajax({
+          type: "POST",
+          dataType:"json",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: { "action" : "go_to_delivery"},
           url: '{!! url('order/update_order_status', ['id' => $order->id ]) !!}',
           success: function (data) {
             console.log("SUCCESS DATA:", data);
