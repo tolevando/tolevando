@@ -160,6 +160,9 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('orders', 'OrderController');
 
+    Route::post('order/update_order_status/{id}', 'OrderController@updateOrderStatus');
+    Route::post('order/update_reason_cancel_order/{id}', 'OrderController@updateReasonCancelOrder');
+
     Route::resource('notifications', 'NotificationController')->except([
         'create', 'store', 'update','edit',
     ]);;
