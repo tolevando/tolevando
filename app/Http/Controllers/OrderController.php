@@ -311,7 +311,12 @@ class OrderController extends Controller
         try {
             $order = Order::find($id);
             if ($order) {
+
                 $order->order_status_id = 2;
+                if (isset($request->action) && $request->action == 'go_to_delivery') {
+                    $order->order_status_id = 4;
+                }
+
                 $order->save();
             }
         } catch (\Exception $e) {
