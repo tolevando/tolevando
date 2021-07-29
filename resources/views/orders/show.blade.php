@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -31,6 +32,14 @@
           <a class="nav-link active" href="{!! url()->current() !!}"><i class="fa fa-plus mr-2"></i>{{trans('lang.order')}}</a>
         </li>
         <div class="ml-auto d-inline-flex">
+          @if(isset($order->order_status_id) && ($order->order_status_id == 1 && $order->active != 0))
+            <li class="nav-item" style="white-space:nowrap">
+              <a class="nav-link pt-1"style="color: #28a745!important;" href="javascript:void(0);" id="updateOrderStatus"><i class="fa fa-check" style="color: #28a745!important;"></i> <b>Aceitar</b></a>
+            </li>
+            <li class="nav-item" style="white-space:nowrap">
+              <a class="nav-link pt-1" href="javascript:void(0);" style="color: red!important;" data-toggle="modal" data-target="#reason_cancel_modal"><i class="fa fa-close" style="color: red!important;"></i> <b>Recusar</b></a>
+            </li>
+          @endif
           <li class="nav-item" style="white-space:nowrap">
             <a class="nav-link pt-1" href="{{route('orders.edit',[$order->id])}}"><i class="fa fa-edit"></i> Editar</a>
           </li>
@@ -269,11 +278,136 @@
 </table>
 </div>
 
+<div class="modal fade" id="reason_cancel_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
+        <div class="modal-content position-relative">
+            <div class="modal-header">
+                <h5 class="modal-title strong-600 heading-5">{{__('Motivo do cancelamento:')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-3 pt-3">
+                <form action="#" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <span class="text-danger">* Necessário preencher esse campo</span>
+                        <textarea name="reason_cancel" id="reason_cancel"  class="form-control" rows="3" style="resize: none;" maxlength="50"></textarea>
+                    </div>
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="resetReasonCancel">{{__('Voltar')}}</button>
+                        <button type="button" class="btn btn-base-1" id="sendReasonCancel">{{__('Enviar')}}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @endsection
 
 @push('scripts')
   <script type="text/javascript">
+
+    $("#sendReasonCancel").on("click",function () {
+
+      var reason_cancel = document.getElementById("reason_cancel");
+
+      if (reason_cancel.value == '') {
+        Swal.fire({
+          // title: 'Error!',
+          text: 'Necessário preencher o campo!',
+          icon: 'error',
+          confirmButtonText: 'OK'
+        })
+        event.preventDefault();
+        return false;
+      }
+
+      $.ajax({
+          type: "POST",
+          dataType:"json",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: { 'reason_cancel': reason_cancel.value },
+          url: '{!! url('order/update_reason_cancel_order', ['id' => $order->id ]) !!}',
+          success: function (data) {
+            console.log("SUCCESS DATA:", data);
+
+            if (data.statusCode == '200') {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: data.msg,
+                showConfirmButton: false,
+                timer: 1000
+              });
+
+              window.location.reload(true);
+              return true;
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Erro ao atualizar registro',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          },
+          error: function (err) {
+              console.log('ERROR: ', err);
+          }
+      });
+    });
+
+    $("#resetReasonCancel").on("click",function () {
+      var reason_cancel = document.getElementById("reason_cancel");
+      reason_cancel.value = '';
+    });
+    
+
+    $("#updateOrderStatus").on("click",function () {
+      $.ajax({
+          type: "POST",
+          dataType:"json",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {},
+          url: '{!! url('order/update_order_status', ['id' => $order->id ]) !!}',
+          success: function (data) {
+            console.log("SUCCESS DATA:", data);
+
+            if (data.statusCode == '200') {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: data.msg,
+                showConfirmButton: false,
+                timer: 1000
+              });
+
+              window.location.reload(true);
+              return true;
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Erro ao atualizar registro',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          },
+          error: function (err) {
+              console.log('ERROR: ', err);
+          }
+      });
+    });
+
     $("#printOrder").on("click",function () {
       window.print();
     });

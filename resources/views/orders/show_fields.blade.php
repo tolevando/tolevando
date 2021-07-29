@@ -30,6 +30,13 @@
     <div class="col-8">
       <p>{!! $order->data_hora !!}</p>
     </div>
+  @endif  
+
+  @if($order->active == 0 && $order->reason_cancel)
+    {!! Form::label('reason_cancel', "Motivo Cancelamento", ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+      <p>{!! $order->reason_cancel !!}</p>
+    </div>
   @endif
 
 
