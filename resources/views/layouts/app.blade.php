@@ -308,7 +308,7 @@
     var quantidadePedidosAnterior = null;
     var sonsAtivados = false;
     $(function () {
-        var audio = new Audio('{{url("nova_notification.mp3")}}');        
+        var audio = new Audio('{{ asset('notifications/order.mp3') }}');        
         audio.play();
         audio.pause();
         function ajaxBuscaUltimosPedidos(){
@@ -334,16 +334,19 @@
                             html += "<td>"+v.produtos+"</td>";
                             html += "<td>"+v.status_pagamento+"</td>";
                             html += "<td>"+v.valor+"</td>";
-                            html += "<td><a href='/orders/"+v.id+"' class='btn btn-sm btn-primary' target='__blank'>Visualizar</a></td>";
+                            html += "<td><a href='/orders/"+v.id+"' class='btn btn-sm btn-primary' onclick='window.location.reload(true);' target='_blank'>Visualizar</a></td>";
                         html += "</tr>";
                     });
                     $('#listaUltimosPedidos').html(html);                    
 
                     if(primeiro!=null && quantidadePedidosAnterior != null){
                         if(quantidadePedidosAnterior != primeiro){
-                            
+                                console.log('TOCANDO NOTIFICAÇÃO');
                                 audio.play();
-                            
+
+                                setInterval(function() {
+                                    audio.play();
+                                }, 2500);
                         }
                     }  
                     quantidadePedidosAnterior = primeiro;
