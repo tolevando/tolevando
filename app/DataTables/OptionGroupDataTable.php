@@ -7,6 +7,7 @@ use App\Models\CustomField;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 use Barryvdh\DomPDF\Facade as PDF;
+use Auth;
 
 class OptionGroupDataTable extends DataTable
 {
@@ -46,7 +47,14 @@ class OptionGroupDataTable extends DataTable
      */
     public function query(OptionGroup $model)
     {
+
+        if (count(Auth::user()->markets)) {
+            $market_id = count(Auth::user()->markets) ? Auth::user()->markets->first()->id : null;
+            return $model->where('market_id', $market_id)->orWhere('market_id', null)->newQuery();
+        }
+
         return $model->newQuery();
+
     }
 
     /**
