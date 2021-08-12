@@ -69,7 +69,8 @@ class Product extends Model implements HasMedia
         'featured',
         'deliverable',
         'market_id',
-        'category_id'
+        'category_id',
+        'option_mid_pizza'
     ];
     /**
      * The attributes that should be casted to native types.
@@ -88,7 +89,8 @@ class Product extends Model implements HasMedia
         'featured' => 'boolean',
         'deliverable' => 'boolean',
         'market_id' => 'integer',
-        'category_id' => 'double'
+        'category_id' => 'double',
+        'option_mid_pizza' => 'integer'
     ];
     /**
      * New Attributes
