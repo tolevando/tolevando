@@ -6,7 +6,7 @@
     <div class="form-group row ">
         {!! Form::label('name', trans("lang.product_name"), ['class' => 'col-3 control-label text-right']) !!}
         <div class="col-9">
-            {!! Form::text('name', null,  ['class' => 'form-control','placeholder'=>  trans("lang.product_name_placeholder")]) !!}
+            {!! Form::text('name', null,  ['class' => 'form-control', 'id="product_name"','placeholder'=>  trans("lang.product_name_placeholder")]) !!}
             <div class="form-text text-muted">
                 {{ trans("lang.product_name_help") }}
             </div>
@@ -177,6 +177,16 @@
                 {!! Form::hidden('deliverable', 0) !!}
                 {!! Form::checkbox('deliverable', 1, null) !!}
             </label>
+        </div>
+    </div>
+
+    <!-- Option Mid Pizza Field -->
+    <div class="form-group row " id="option_mid_pizza_label" style="display: none;">
+        {!! Form::label('option_mid_pizza', 'Opção de meia pizza',['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('option_mid_pizza', ['Não oferecer', 'Valor Médio', 'Valor Maior'], null, ['class' => 'select2 form-control', 'id="option_mid_pizza_value"']) !!}
+            <div class="form-text text-muted">Maior Valor (o valor será o maior entre as duas metades escolhidas)</div>
+            <div class="form-text text-muted">Valor Médio (o valor será o valor médio entre das duas metades escolhidas)</div>
         </div>
     </div>
 
