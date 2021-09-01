@@ -26,6 +26,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->command('establishment_opening_hour:check_open')->everyMinute()->timezone('America/Sao_Paulo')->withoutOverlapping();
     }
 
     /**

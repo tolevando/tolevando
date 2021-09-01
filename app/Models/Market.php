@@ -237,6 +237,14 @@ class Market extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany(\App\Models\Product::class, 'market_id');
+    }    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function openingHourMarket()
+    {
+        return $this->hasMany(\App\Models\OpeningHourMarket::class, 'market_id');
     }
 
     /**
