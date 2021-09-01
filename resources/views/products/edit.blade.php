@@ -74,6 +74,53 @@
 {{--dropzone--}}
 <script src="{{asset('plugins/dropzone/dropzone.js')}}"></script>
 <script type="text/javascript">
+  
+    $( document ).ready(function() {
+        console.log( "ready!" );
+        var product_name = document.getElementById('product_name').value;
+
+        switch (product_name.toLowerCase()) {
+          case 'pizza meio a meio':
+            $("#option_mid_pizza_label").show();
+            break;
+          case 'pizza 2 sabores':
+            $("#option_mid_pizza_label").show();
+            break;
+          case 'pizza dois sabores':
+            $("#option_mid_pizza_label").show();
+            break;
+          case 'pizza meio à meio':
+            $("#option_mid_pizza_label").show();
+            break;
+          default:
+            $("#option_mid_pizza_label").hide();
+            $("#option_mid_pizza_label").value = 0;
+        }
+    });
+
+    $( "#product_name" ).keyup(function() {
+
+      var product_name = document.getElementById('product_name').value;
+
+      switch (product_name.toLowerCase()) {
+        case 'pizza meio a meio':
+          $("#option_mid_pizza_label").show();
+          break;
+        case 'pizza 2 sabores':
+          $("#option_mid_pizza_label").show();
+          break;
+        case 'pizza dois sabores':
+          $("#option_mid_pizza_label").show();
+          break;
+        case 'pizza meio à meio':
+          $("#option_mid_pizza_label").show();
+          break;
+        default:
+          $("#option_mid_pizza_label").hide();
+          $("#option_mid_pizza_value").val(0);
+      }
+
+    });
     Dropzone.autoDiscover = false;
     var dropzoneFields = [];
 </script>
