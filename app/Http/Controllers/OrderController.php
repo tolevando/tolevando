@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -303,5 +304,41 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
+    }
+
+    public function updateOrderStatus($id, Request $request)
+    {
+        try {
+            $order = Order::find($id);
+            if ($order) {
+
+                $order->order_status_id = 2;
+                if (isset($request->action) && $request->action == 'go_to_delivery') {
+                    $order->order_status_id = 4;
+                }
+
+                $order->save();
+            }
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Pedido atualizado com sucesso!' ];
+    }
+
+    public function updateReasonCancelOrder($id, Request $request)
+    {
+        try {
+            $order = Order::find($id);
+            if ($order) {
+                $order->active = 0;
+                $order->reason_cancel = $request->reason_cancel;
+                $order->save();
+            }
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Pedido atualizado com sucesso!' ];
     }
 }
