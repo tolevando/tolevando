@@ -19,7 +19,10 @@ class OptionGroup extends Model
 
 
     public $fillable = [
-        'name'
+        'name',
+        'is_unique',
+        'is_required',
+        'market_id'
     ];
 
     /**
@@ -28,7 +31,10 @@ class OptionGroup extends Model
      * @var array
      */
     protected $casts = [
-        'name' => 'string'
+        'name' => 'string',
+        'is_unique' => 'boolean',
+        'is_required' => 'boolean',
+        'market_id' => 'integer'
     ];
 
     /**
@@ -69,6 +75,10 @@ class OptionGroup extends Model
         return convertToAssoc($array,'name');
     }
 
+    public function market()
+    {
+        return $this->belongsTo(\App\Models\Market::class, 'market_id', 'id');
+    }
     
     
 }
