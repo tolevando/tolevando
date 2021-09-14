@@ -308,7 +308,7 @@
     var quantidadePedidosAnterior = null;
     var sonsAtivados = false;
     $(function () {
-        var audio = new Audio('{{ asset('notifications/order.mp3') }}');        
+        var audio = new Audio('{{ asset('notification_sounds/order.mp3') }}');        
         audio.play();
         audio.pause();
         function ajaxBuscaUltimosPedidos(){
