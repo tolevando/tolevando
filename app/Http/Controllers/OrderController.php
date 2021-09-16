@@ -309,6 +309,14 @@ class OrderController extends Controller
     public function updateOrderStatus($id, Request $request)
     {
         try {
+            $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id()));
+            $oldOrder = $this->orderRepository->findWithoutFail($id);
+            if (empty($oldOrder)) {
+                Flash::error(__('lang.not_found', ['operator' => __('lang.order')]));
+                return redirect(route('orders.index'));
+            }
+            $oldStatus = $oldOrder->payment->status;
+
             $order = Order::find($id);
             if ($order) {
 
@@ -319,6 +327,20 @@ class OrderController extends Controller
 
                 $order->save();
             }
+
+            if (setting('enable_notifications', false)) {
+                if (isset($order->order_status_id) && $order->order_status_id != $oldOrder->order_status_id) {
+                    Notification::send([$order->user], new StatusChangedOrder($order));
+                }
+
+                if (isset($order->driver_id) && ($order->driver_id != $oldOrder['driver_id'])) {
+                    $driver = $this->userRepository->findWithoutFail($order->driver_id);
+                    if (!empty($driver)) {
+                        Notification::send([$driver], new AssignedOrder($order));
+                    }
+                }
+            }
+
         } catch (\Exception $e) {
             return ['statusCode' => 500, 'msg' => $e->getMessage() ];
         }
