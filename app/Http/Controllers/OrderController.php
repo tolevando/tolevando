@@ -357,6 +357,11 @@ class OrderController extends Controller
                 $order->reason_cancel = $request->reason_cancel;
                 $order->save();
             }
+
+            if (setting('enable_notifications', false)) {
+                Notification::send([$order->user], new StatusChangedOrder($order, true));
+            }
+
         } catch (\Exception $e) {
             return ['statusCode' => 500, 'msg' => $e->getMessage() ];
         }
