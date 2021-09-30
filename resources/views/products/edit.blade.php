@@ -79,46 +79,92 @@
         console.log( "ready!" );
         var product_name = document.getElementById('product_name').value;
 
-        switch (product_name.toLowerCase()) {
-          case 'pizza meio a meio':
-            $("#option_mid_pizza_label").show();
-            break;
-          case 'pizza 2 sabores':
-            $("#option_mid_pizza_label").show();
-            break;
-          case 'pizza dois sabores':
-            $("#option_mid_pizza_label").show();
-            break;
-          case 'pizza meio à meio':
-            $("#option_mid_pizza_label").show();
-            break;
-          default:
-            $("#option_mid_pizza_label").hide();
-            $("#option_mid_pizza_label").value = 0;
+        if (product_name.toLowerCase().includes("pizza meio a meio")) {
+          $("#option_mid_pizza_label").show();
+          return;
         }
+
+        if (product_name.toLowerCase().includes("pizza 2 sabores")) {
+            $("#option_mid_pizza_label").show();
+            return;
+        }
+
+        if (product_name.toLowerCase().includes("pizza dois sabores")) {
+            $("#option_mid_pizza_label").show();
+            return;
+        }
+
+        if (product_name.toLowerCase().includes("pizza meio à meio")) {
+            $("#option_mid_pizza_label").show();
+            return;
+        }
+
+        $("#option_mid_pizza_label").hide();
+        $("#option_mid_pizza_value").val(0);
+
+        // switch (product_name.toLowerCase()) {
+        //   case 'pizza meio a meio':
+        //     $("#option_mid_pizza_label").show();
+        //     break;
+        //   case 'pizza 2 sabores':
+        //     $("#option_mid_pizza_label").show();
+        //     break;
+        //   case 'pizza dois sabores':
+        //     $("#option_mid_pizza_label").show();
+        //     break;
+        //   case 'pizza meio à meio':
+        //     $("#option_mid_pizza_label").show();
+        //     break;
+        //   default:
+        //     $("#option_mid_pizza_label").hide();
+        //     $("#option_mid_pizza_label").value = 0;
+        // }
     });
 
     $( "#product_name" ).keyup(function() {
 
       var product_name = document.getElementById('product_name').value;
 
-      switch (product_name.toLowerCase()) {
-        case 'pizza meio a meio':
-          $("#option_mid_pizza_label").show();
-          break;
-        case 'pizza 2 sabores':
-          $("#option_mid_pizza_label").show();
-          break;
-        case 'pizza dois sabores':
-          $("#option_mid_pizza_label").show();
-          break;
-        case 'pizza meio à meio':
-          $("#option_mid_pizza_label").show();
-          break;
-        default:
-          $("#option_mid_pizza_label").hide();
-          $("#option_mid_pizza_value").val(0);
+      if (product_name.toLowerCase().includes("pizza meio a meio")) {
+        $("#option_mid_pizza_label").show();
+        return;
       }
+
+      if (product_name.toLowerCase().includes("pizza 2 sabores")) {
+          $("#option_mid_pizza_label").show();
+          return;
+      }
+
+      if (product_name.toLowerCase().includes("pizza dois sabores")) {
+          $("#option_mid_pizza_label").show();
+          return;
+      }
+
+      if (product_name.toLowerCase().includes("pizza meio à meio")) {
+          $("#option_mid_pizza_label").show();
+          return;
+      }
+
+      $("#option_mid_pizza_label").hide();
+      $("#option_mid_pizza_value").val(0);
+
+      // switch (product_name.toLowerCase()) {
+      //   case 'pizza meio a meio':
+      //     $("#option_mid_pizza_label").show();
+      //     break;
+      //   case 'pizza 2 sabores':
+      //     $("#option_mid_pizza_label").show();
+      //     break;
+      //   case 'pizza dois sabores':
+      //     $("#option_mid_pizza_label").show();
+      //     break;
+      //   case 'pizza meio à meio':
+      //     $("#option_mid_pizza_label").show();
+      //     break;
+      //   default:
+      //     $("#option_mid_pizza_label").hide();
+      //     $("#option_mid_pizza_value").val(0);
+      // }
 
     });
     Dropzone.autoDiscover = false;
