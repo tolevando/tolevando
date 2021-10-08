@@ -117,7 +117,7 @@
         <p>{!! $order->observacao !!}</p>
     </div>
     
-    @if($order->payment->method == 'Cartão de Crédito na Entrega' || $order->payment->method == 'Cartão de Dédito na Entrega')
+    @if($order->payment->method == 'Cartão de Crédito na Entrega' || $order->payment->method == 'Cartão de Débito na Entrega')
     
         {!! Form::label('card_brand', 'Bandeira do Cartão', ['class' => 'col-4 control-label']) !!}
         <div class="col-8">
