@@ -50,7 +50,8 @@ class Order extends Model
         'active',
         'driver_id',
         'coupon_id',
-        'reason_cancel'
+        'reason_cancel',
+        'card_brand'
     ];
 
     /**
@@ -72,7 +73,8 @@ class Order extends Model
         'active'=>'boolean',
         'driver_id' => 'integer',        
         'data_hora' => 'string',
-        'reason_cancel' => 'string'
+        'reason_cancel' => 'string',
+        'card_brand' => 'string'
     ];
 
     /**

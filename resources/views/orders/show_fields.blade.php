@@ -117,6 +117,15 @@
         <p>{!! $order->observacao !!}</p>
     </div>
     
+    @if($order->payment->method == 'Cartão de Crédito na Entrega' || $order->payment->method == 'Cartão de Dédito na Entrega')
+    
+        {!! Form::label('card_brand', 'Bandeira do Cartão', ['class' => 'col-4 control-label']) !!}
+        <div class="col-8">
+            <p>{!! $order->card_brand??'-' !!}</p>
+        </div>
+
+    @endif
+
     {!! Form::label('troco_para', 'Troco para', ['class' => 'col-4 control-label']) !!}
     <div class="col-8">
         <p>{!! $order->troco_para??'-' !!}</p>
