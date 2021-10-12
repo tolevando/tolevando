@@ -437,6 +437,15 @@
             </div>
         </div>
         <div class="form-group row ">
+            {!! Form::label('admin_monthly', "Mensalidade", ['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::number('admin_monthly', null,  ['class' => 'form-control', 'step'=>'any', 'placeholder'=>  trans("lang.market_admin_commission_placeholder")]) !!}
+                <div class="form-text text-muted">
+                    {{ trans("lang.market_admin_monthly_help") }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group row ">
             {!! Form::label('active', trans("lang.market_active"),['class' => 'col-3 control-label text-right']) !!}
             <div class="checkbox icheck">
                 <label class="col-9 ml-2 form-check-inline">

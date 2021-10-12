@@ -37,6 +37,7 @@ use Spatie\MediaLibrary\Models\Media;
  * @property string mobile
  * @property string information
  * @property double admin_commission
+ * @property double admin_monthly
  * @property double delivery_fee
  * @property double default_tax
  * @property double delivery_range
@@ -68,6 +69,7 @@ class Market extends Model implements HasMedia
         'phone',
         'mobile',
         'admin_commission',
+        'admin_monthly',
         'delivery_fee',
         'bairro_id',
         'default_tax',
@@ -100,6 +102,7 @@ class Market extends Model implements HasMedia
         'phone' => 'string',
         'mobile' => 'string',
         'admin_commission' =>'double',
+        'admin_monthly' =>'double',
         'delivery_fee'=>'double',
         'default_tax'=>'double',
         'delivery_range'=>'double',

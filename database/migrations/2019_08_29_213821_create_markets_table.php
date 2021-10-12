@@ -31,6 +31,7 @@ class CreateMarketsTable extends Migration
             $table->string('mobile', 50)->nullable();
             $table->text('information')->nullable();
             $table->double('admin_commission', 8, 2)->nullable()->default(0);
+            $table->double('admin_monthly', 8, 2)->nullable()->default(0);//added
             $table->double('delivery_fee', 8, 2)->nullable()->default(0);
             $table->double('delivery_range', 8, 2)->nullable()->default(0);//added
             $table->double('default_tax', 8, 2)->nullable()->default(0); // //added
@@ -51,3 +52,4 @@ class CreateMarketsTable extends Migration
         Schema::drop('markets');
     }
 }
+
