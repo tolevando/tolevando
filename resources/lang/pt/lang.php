@@ -745,6 +745,7 @@ return [
     'market_address_placeholder' => 'Inserir Endereço',
     'market_admin_commission' => 'Comissão %',
     'market_admin_commission_help' => 'Comissão (Ex 30 para 30% dos valores dos pedidos)',
+    'market_admin_monthly_help' => 'Mensalidade com valor inteiro',
     'market_admin_commission_placeholder' => '10',
     'market_create' => 'Criar Estabelecimento',
     'market_delivery_fee' => 'Taxa de Entrega',
