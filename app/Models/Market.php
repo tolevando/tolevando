@@ -250,6 +250,14 @@ class Market extends Model implements HasMedia
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      **/
+    public function brandMarket()
+    {
+        return $this->hasMany(\App\Models\BrandMarket::class, 'market_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
     public function galleries()
     {
         return $this->hasMany(\App\Models\Gallery::class, 'market_id');

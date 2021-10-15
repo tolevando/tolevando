@@ -419,6 +419,51 @@
 </div>
 @endif
 
+@if(isset($market))
+<div class="col-12 custom-field-container">
+    <div style="flex: 90%;max-width: 50%;padding: 0 4px;" class="column">
+        <h5 class="col-12 pb-4">Bandeira de Cartão</h5>
+    </div>
+    <div style="flex: 10%;max-width: 50%;padding: 0 2px;" class="column">
+        <div class="alert alert-info" data-toggle="modal" data-target="#brand_modal">
+            <i class="fa fa-plus" style="margin-right: 7px;"></i> Adicionar nova bandeira de cartão
+        </div>
+    </div>
+    <div style="flex: 100%;max-width: 100%;padding: 0 4px;" class="column">
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th width="200">Bandeira</th>
+                    <th width="80"></th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @if(isset($market->brandMarket) && count($market->brandMarket))
+                    @foreach($market->brandMarket as $brand)
+                        <tr>
+                            <td>{{ $brand->brand }}</td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" data-toggle="modal" data-target="#brand_modal" onclick="populateFormBrand({{$brand}})">
+                                    <i class="fa fa-edit" style="margin-right: 10px; margin-left: 10px;"></i>
+                                </a>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" onclick="deleteBrand({{ $brand->id }})">
+                                    <i class="fa fa-trash" style="margin-left: 10px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr style="background-color: rgba(0, 0, 0, 0.05)">
+                        <td colspan='5' style='text-align:center'>Não existem registros a serem mostrados</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
 
 <div class="col-12 custom-field-container">
     <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
@@ -630,6 +675,37 @@
                         <button type="button" class="btn btn-base-1" onclick="validateForm()">{{__('Adicionar')}}</button>
                     </div>
                     <input type="hidden" id="id_opening_hours" name="id_opening_hours" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="brand_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
+        <div class="modal-content position-relative">
+            <div class="modal-header">
+                <h5 class="modal-title strong-600 heading-5">{{__('Adicionar bandeira de cartão')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-3 pt-3">
+                <form id="one" action="#" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group" id="divDay">
+                    
+                    <div class="form-group">
+                        <label>Bandeira do cartão<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control mb-3" name="brand" id="brand" placeholder="Digite a bandeira do cartão"  step="1">
+                    </div>
+                    
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetFormBrand()">{{__('Cancelar')}}</button>
+                        <button type="button" class="btn btn-base-1" onclick="validateFormBrand()">{{__('Adicionar')}}</button>
+                    </div>
+                    <input type="hidden" id="id_market_brand" name="id_market_brand" value="">
                 </form>
             </div>
         </div>

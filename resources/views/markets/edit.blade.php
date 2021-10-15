@@ -242,6 +242,72 @@
       });
   }
 
+  function validateFormBrand() { 
+
+    var brand = document.getElementById("brand");
+    var id_market_brand = document.getElementById("id_market_brand");
+
+    if (brand.value == ""){
+      Swal.fire({
+        // title: 'Error!',
+        text: 'Necessário preencher a bandeira!',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      })
+      event.preventDefault();
+      return false;
+    }
+
+    $.ajax({
+          type: "POST",
+          dataType:"json",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: {'brand': brand.value, 'id_market_brand': (id_market_brand ? id_market_brand.value : false)},
+          url: '{!! url('markets/brand', ['id' => $market->id ]) !!}',
+          success: function (data) {
+            console.log("SUCCESS DATA:", data);
+
+            if (data.statusCode == '200') {
+              $('#brand_modal').modal('hide');
+              resetForm();
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: data.msg,
+                showConfirmButton: false,
+                timer: 2000
+              });
+              window.location.reload(true);
+              return true;
+            }
+
+            if (data.statusCode == '400') {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: data.msg,
+                showConfirmButton: false,
+                timer: 2000
+              });
+              return true;
+            }
+
+            Swal.fire({
+              position: 'top-end',
+              icon: 'error',
+              title: 'Erro ao atualizar registro',
+              showConfirmButton: false,
+              timer: 2000
+            });
+          },
+          error: function (err) {
+              console.log('ERROR: ', err);
+          }
+      });
+  }
+
   function resetForm() {
     document.getElementById("divDay").style.display="block";
     document.getElementById("divEditDay").style.display="none";
@@ -252,6 +318,12 @@
     document.getElementById("close_hour").value = '';
     document.getElementById("scales").checked = false;
 
+    return $('#myForm').trigger("reset");
+  }
+
+  function resetFormBrand() {
+    document.getElementById("brand").value = '';
+    document.getElementById("id_market_brand").value = '';
     return $('#myForm').trigger("reset");
   }
 
@@ -268,6 +340,12 @@
     if (data.automatic_open_close) {
       document.getElementById("scales").checked = true;
     }
+  }
+
+
+  function populateFormBrand(data) {
+    document.getElementById("id_market_brand").value = data.id;
+    document.getElementById("brand").value = data.brand;
   }
 
   function deleteOpeningHour(id) {
@@ -302,6 +380,66 @@
           },
           success: function (data) {
             console.log("SUCCESS DATA:", data);
+
+            if (data.statusCode == '200') {
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Registro Deletado!',
+                showConfirmButton: false,
+                timer: 2000
+              });
+
+              window.location.reload(true);
+              return true;
+            }
+
+            swalWithBootstrapButtons.fire(
+                'Erro ao deletar registro!',
+                '',
+                'error'
+              )
+          },
+          error: function (err) {
+              console.log('ERROR: ', err);
+          }
+        });
+      }
+    })
+  }
+
+  function deleteBrand(id) {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: true
+    })
+
+    swalWithBootstrapButtons.fire({
+      title: 'Deseja excluir o registro?',
+      // text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Não',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        $.ajax({
+          type: "POST",
+          dataType:"json",
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          url: '{!! url('markets/brand/delete') !!}',
+          data:{
+              id: id,
+          },
+          success: function (data) {
+            console.log("SUCCESS DATA DELETE:", data);
 
             if (data.statusCode == '200') {
               Swal.fire({

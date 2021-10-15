@@ -33,6 +33,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 use App\Models\Cidade;
 use App\Models\Bairro;
 use App\Models\OpeningHourMarket;
+use App\Models\BrandMarket;
 
 class MarketController extends Controller
 {
@@ -409,11 +410,59 @@ class MarketController extends Controller
         return ['statusCode' => 200, 'msg' => 'Registro atualizado com sucesso!' ];
     }
 
+    public function validateBrand($brand, $market_id)
+    {
+        $brand_market = BrandMarket::where('brand', $brand)->where('market_id', $market_id)->get();
+        foreach ($brand_market as $index => $brand_single) {
+            if (strtolower($brand_single) == strtolower($brand)) {
+                return false;
+            }
+        }
+    }
+
+    public function saveBrands($id, Request $request)
+    {
+        try {
+
+            if (isset($request->id_market_brand) && $request->id_market_brand) {
+                $brand = BrandMarket::find($request->id_market_brand);
+                $brand->brand = $request->brand;
+                $brand->save();
+            }else {
+                
+                if (!$this->validateBrand($request->brand, $id)) {
+                    return ['statusCode' => 400, 'msg' => 'Essa bandeira já exite!' ];
+                }
+
+                BrandMarket::create([
+                    'market_id' => $id,
+                    'brand' => $request->brand
+                ]);
+            }
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Registro atualizado com sucesso!' ];
+    }
+
     public function deleteOpeningHours(Request $request)
     {
         try {
             $openingHour = OpeningHourMarket::find($request->id);
             $openingHour->delete();
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Registro deletado com sucesso!' ];
+    }
+
+    public function deleteBrand(Request $request)
+    {
+        try {
+            $brand = BrandMarket::find($request->id);
+            $brand->delete();
         } catch (\Exception $e) {
             return ['statusCode' => 500, 'msg' => $e->getMessage() ];
         }
