@@ -9,6 +9,7 @@ $factory->define(\App\Models\DeliveryAddress::class, function (Faker $faker) {
     return [
         "description" => $faker->sentence,
         "address" => $faker->address,
+        "number" => $faker->number,
         "latitude" => $faker->latitude,
         "longitude" => $faker->longitude,
         "is_default" => $faker->boolean,
