@@ -412,12 +412,17 @@ class MarketController extends Controller
 
     public function validateBrand($brand, $market_id)
     {
-        $brand_market = BrandMarket::where('brand', $brand)->where('market_id', $market_id)->get();
-        foreach ($brand_market as $index => $brand_single) {
-            if (strtolower($brand_single) == strtolower($brand)) {
-                return false;
+        $brand_market = BrandMarket::where('market_id', $market_id)->get();
+
+        if (count($brand_market)) {
+            foreach ($brand_market as $index => $brand_single) {
+                if (strtolower($brand_single->brand) == strtolower($brand)) {
+                    return false;
+                }
             }
         }
+
+        return true;
     }
 
     public function saveBrands($id, Request $request)
