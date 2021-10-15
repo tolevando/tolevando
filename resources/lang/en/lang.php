@@ -658,7 +658,7 @@ return [
     'notification_user_id' => 'User Id',
     'notification_user_id_help' => 'Insert User Id',
     'notification_user_id_placeholder' => 'Insert User Id',
-    'notification_your_order' => 'Your order #:order_id is :order_status',
+    'notification_your_order' => 'Seu pedido #:order_id está :order_status',
     'number' => 'Number',
     'ok' => 'OK',
     'or' => 'Or',
