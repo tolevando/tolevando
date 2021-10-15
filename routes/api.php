@@ -49,7 +49,7 @@ Route::get('settings', 'API\UserAPIController@settings');
 Route::resource('fields', 'API\FieldAPIController');
 Route::resource('categories', 'API\CategoryAPIController');
 Route::resource('markets', 'API\MarketAPIController');
-Route::resource('markets/brands', 'API\MarketBrandsAPIController');
+Route::get('markets/brands/{id}', 'API\MarketBrandsAPIController@returnBrands');
 
 Route::resource('faq_categories', 'API\FaqCategoryAPIController');
 Route::get('products/categories', 'API\ProductAPIController@categories');

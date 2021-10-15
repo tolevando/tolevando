@@ -123,6 +123,22 @@ class MarketBrandsAPIController extends Controller
         return $this->sendResponse($brand->toArray(), 'Brands retrieved successfully');
     }
 
+    public function returnBrands($id)
+    {
+        \Log::info('CAIU RETURN BRAND');
+        \Log::info($id);
+        /** @var Brand $brand */
+        if (!empty($this->brandMarketRepository)) {
+            $brand = $this->brandMarketRepository->where('market_id', $id);
+        }
+
+        if (empty($brand)) {
+            return $this->sendError('Brands not found');
+        }
+
+        return $this->sendResponse($brand->toArray(), 'Brands retrieved successfully');
+    }
+
     /**
      * Store a newly created Market in storage.
      *
