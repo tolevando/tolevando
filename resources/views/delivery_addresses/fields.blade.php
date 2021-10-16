@@ -24,6 +24,28 @@
   </div>
 </div>
 
+<!-- Bairro Field -->
+<div class="form-group row ">
+  {!! Form::label('bairro', 'Bairro', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('bairro', null,  ['class' => 'form-control','placeholder'=>  'Digite o bairro']) !!}
+    <div class="form-text text-muted">
+      {{ 'Digite o bairro' }}
+    </div>
+  </div>
+</div>
+
+<!-- Complement Field -->
+<div class="form-group row ">
+  {!! Form::label('complement', 'Complemento', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('complement', null,  ['class' => 'form-control','placeholder'=>  'Digite o complemento']) !!}
+    <div class="form-text text-muted">
+      {{ 'Digite o complemento' }}
+    </div>
+  </div>
+</div>
+
 <!-- Latitude Field -->
 <div class="form-group row ">
   {!! Form::label('latitude', trans("lang.delivery_address_latitude"), ['class' => 'col-3 control-label text-right']) !!}

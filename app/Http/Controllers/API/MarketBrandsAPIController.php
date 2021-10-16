@@ -52,7 +52,7 @@ class MarketBrandsAPIController extends Controller
     private $uploadRepository;
 
 
-    public function __construct(MarketRepository $marketRepo, CustomFieldRepository $customFieldRepo, UploadRepository $uploadRepo, BrandMarketRepository $brandMarketRepository,)
+    public function __construct(MarketRepository $marketRepo, CustomFieldRepository $customFieldRepo, UploadRepository $uploadRepo, BrandMarketRepository $brandMarketRepository)
     {
         parent::__construct();
         $this->marketRepository = $marketRepo;

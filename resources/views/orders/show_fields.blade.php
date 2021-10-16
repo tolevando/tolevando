@@ -25,6 +25,16 @@
     <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->number ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
   </div>
 
+    {!! Form::label('bairro', 'Bairro', ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+    <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->bairro ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
+  </div>
+
+    {!! Form::label('complemento', 'Complemento', ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+    <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->complement ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
+  </div>
+
     {!! Form::label('order_date', trans('lang.order_date'), ['class' => 'col-4 control-label']) !!}
     <div class="col-8">
     <p>{!! $order->created_at->format('d/m/Y H:i:s') !!}</p>

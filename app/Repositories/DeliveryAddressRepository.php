@@ -23,6 +23,8 @@ class DeliveryAddressRepository extends BaseRepository
         'description',
         'address',
         'number',
+        'bairro',
+        'complement',
         'latitude',
         'longitude',
         'is_default',

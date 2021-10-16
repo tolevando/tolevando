@@ -10,6 +10,8 @@ $factory->define(\App\Models\DeliveryAddress::class, function (Faker $faker) {
         "description" => $faker->sentence,
         "address" => $faker->address,
         "number" => $faker->number,
+        "bairro" => $faker->bairro,
+        "complement" => $faker->complement,
         "latitude" => $faker->latitude,
         "longitude" => $faker->longitude,
         "is_default" => $faker->boolean,
