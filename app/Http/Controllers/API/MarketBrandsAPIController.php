@@ -125,11 +125,9 @@ class MarketBrandsAPIController extends Controller
 
     public function returnBrands($id)
     {
-        \Log::info('CAIU RETURN BRAND');
-        \Log::info($id);
         /** @var Brand $brand */
         if (!empty($this->brandMarketRepository)) {
-            $brand = $this->brandMarketRepository->where('market_id', $id);
+            $brand = $this->brandMarketRepository->where('market_id', $id)->get();
         }
 
         if (empty($brand)) {
