@@ -37,6 +37,7 @@ class CreateMarketsTable extends Migration
             $table->double('default_tax', 8, 2)->nullable()->default(0); // //added
             $table->boolean('closed')->nullable()->default(0); // //added
             $table->boolean('active')->nullable()->default(0); // //added
+            $table->boolean('exclusive')->nullable()->default(0); // //added
             $table->boolean('available_for_delivery')->nullable()->default(1); //added
             $table->timestamps();
         });

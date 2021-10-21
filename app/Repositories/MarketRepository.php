@@ -39,7 +39,9 @@ class MarketRepository extends BaseRepository implements CacheableInterface
         'closed',
         'admin_commission',
         'admin_monthly',
-        'cidade_id',        
+        'cidade_id', 
+        'fidelity_at',       
+        'bonus_at',
     ];
 
     /**

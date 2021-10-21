@@ -81,9 +81,9 @@ class AppServiceProvider extends ServiceProvider
 
             config(['app.timezone' => setting('timezone')]);
 
-            /*if(env('APP_ENV') !== 'local'){
+            if(env('APP_ENV') !== 'local'){
                 $this->app['request']->server->set('HTTPS', true);
-            }*/
+            }
 
         } catch (\Exception $exception) {
 
