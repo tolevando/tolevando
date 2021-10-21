@@ -44,6 +44,9 @@ use Spatie\MediaLibrary\Models\Media;
  * @property boolean available_for_delivery
  * @property boolean closed
  * @property boolean active
+ * @property boolean exclusive
+ * @property date fidelity_at
+ * @property date bonus_at
  */
 class Market extends Model implements HasMedia
 {
@@ -85,6 +88,9 @@ class Market extends Model implements HasMedia
         'closed',
         'information',
         'active',
+        'exclusive',
+        'fidelity_at',
+        'bonus_at',
     ];
 
     /**
@@ -110,6 +116,7 @@ class Market extends Model implements HasMedia
         'closed'=>'boolean',
         'information' => 'string',
         'active' =>'boolean',
+        'exclusive' =>'boolean',
         'offline_payment_option_cash' =>'boolean',
         'offline_payment_option_credit' =>'boolean',
         'offline_payment_option_debit' =>'boolean',
@@ -117,6 +124,8 @@ class Market extends Model implements HasMedia
         'pagarme_recipient_id' => 'string',
         'pagarme_recebedor_taxa_entrega' => 'boolean',
         'exige_agendamento' => 'boolean',
+        'fidelity_at' => 'string',
+        'bonus_at' => 'string'
     ];
 
     /**

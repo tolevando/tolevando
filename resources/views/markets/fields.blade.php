@@ -454,6 +454,35 @@
                 </label>
             </div>
         </div>
+        <div class="form-group row ">
+            {!! Form::label('exclusive', trans("lang.market_exclusive"),['class' => 'col-3 control-label text-left']) !!}
+            <div class="checkbox icheck">
+                <label class="col-9 ml-2 form-check-inline">
+                    {!! Form::hidden('exclusive', 0) !!}
+                    {!! Form::checkbox('exclusive', 1, null) !!}
+                </label>
+            </div>
+        </div>
+    </div>
+    <!-- fidelity -->
+    <div class="form-group row ">
+        {!! Form::label('fidelity_at', trans("lang.market_fidelaty"), ['class' => 'col-4 control-label text-left']) !!}
+        <div class="col-9">
+            {!! Form::date('fidelity_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_fidelaty_placeholder")]) !!}
+            <div class="form-text text-muted">
+                {{ trans("lang.market_fidelaty_placeholder") }}
+            </div>
+        </div>
+    </div>
+    <!-- bonus -->
+    <div class="form-group row ">
+        {!! Form::label('bonus_at', trans("lang.market_bonus"), ['class' => 'col-6 control-label text-left']) !!}
+        <div class="col-9">
+            {!! Form::date('bonus_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_bonus_placeholder")]) !!}
+            <div class="form-text text-muted">
+                {{ trans("lang.market_bonus_placeholder") }}
+            </div>
+        </div>
     </div>
 </div>
 @endhasrole
