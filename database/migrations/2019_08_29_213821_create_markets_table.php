@@ -39,6 +39,7 @@ class CreateMarketsTable extends Migration
             $table->boolean('active')->nullable()->default(0); // //added
             $table->boolean('exclusive')->nullable()->default(0); // //added
             $table->boolean('available_for_delivery')->nullable()->default(1); //added
+            $table->string('type_of_plan', 2)->nullable(); //added
             $table->timestamps();
         });
     }

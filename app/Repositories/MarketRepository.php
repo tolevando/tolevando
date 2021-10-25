@@ -42,6 +42,7 @@ class MarketRepository extends BaseRepository implements CacheableInterface
         'cidade_id', 
         'fidelity_at',       
         'bonus_at',
+        'type_of_plan',
     ];
 
     /**
