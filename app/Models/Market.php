@@ -47,6 +47,7 @@ use Spatie\MediaLibrary\Models\Media;
  * @property boolean exclusive
  * @property date fidelity_at
  * @property date bonus_at
+ * @property string type_of_plan
  */
 class Market extends Model implements HasMedia
 {
@@ -91,6 +92,7 @@ class Market extends Model implements HasMedia
         'exclusive',
         'fidelity_at',
         'bonus_at',
+        'type_of_plan',
     ];
 
     /**
@@ -125,7 +127,8 @@ class Market extends Model implements HasMedia
         'pagarme_recebedor_taxa_entrega' => 'boolean',
         'exige_agendamento' => 'boolean',
         'fidelity_at' => 'string',
-        'bonus_at' => 'string'
+        'bonus_at' => 'string',
+        'type_of_plan' => 'string'
     ];
 
     /**

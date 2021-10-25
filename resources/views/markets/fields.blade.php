@@ -370,11 +370,49 @@
     </div>
 </div>
 
+@prepend('scripts')
+<script type="text/javascript">
+
+$(document).ready(function(){
+   $('#type_of_plan').on('change',function(){ 
+     let tipo_contac = $(this).val(); 
+     if(tipo_contac == 'A') {
+      $('#admin_commission').attr('disabled', false);
+      $('#admin_monthly').attr('disabled','disabled');
+      $('#bonus_at').attr('disabled','disabled');
+      
+     }else if(tipo_contac == 'B') {
+        $('#admin_commission').attr('disabled','disabled');
+        $('#admin_monthly').attr('disabled','disabled');
+        $('#bonus_at').attr('disabled','disabled');
+     }else if(tipo_contac == 'C') {
+        $('#admin_commission').attr('disabled', false);
+        $('#admin_monthly').attr('disabled', false);
+        $('#bonus_at').attr('disabled', false);
+     } else {
+        $('#admin_commission').attr('disabled', false);
+        $('#admin_monthly').attr('disabled', false);
+        $('#bonus_at').attr('disabled', false);
+     }
+   });
+});
+
+</script>
+@endprepend
 
 @hasrole('admin')
 <div class="col-12 custom-field-container">
     <h5 class="col-12 pb-4">{!! trans('lang.admin_area') !!}</h5>
     <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
+        <div class="form-group row ">
+            {!! Form::label('active', trans("lang.market_active"),['class' => 'col-3 control-label text-right']) !!}
+            <div class="checkbox icheck">
+                <label class="col-9 ml-2 form-check-inline">
+                    {!! Form::hidden('active', 0) !!}
+                    {!! Form::checkbox('active', 1, null) !!}
+                </label>
+            </div>
+        </div>
         <!-- Users Field -->
         <div class="form-group row ">
             {!! Form::label('users[]', trans("lang.market_users"),['class' => 'col-3 control-label text-right']) !!}
@@ -383,6 +421,73 @@
                 <div class="form-text text-muted">{{ trans("lang.market_users_help") }}</div>
             </div>
         </div>
+        <!-- Status Field -->
+        <div class="form-group row ">
+            {!! Form::label('type_of_plan', trans("lang.type_of_plan"),['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::select('type_of_plan',
+                [
+                ''  => trans('lang.choose_type_of_plan'),
+                'A' => trans('lang.type_of_plan_A'),
+                'B' => trans('lang.type_of_plan_B'),
+                'C' => trans('lang.type_of_plan_C'),
+                ]
+                , isset($market->type_of_plan) ? $market->type_of_plan : '', ['class' => 'select2 form-control']) !!}
+                <div class="form-text text-muted">{{ trans("lang.type_of_plan") }}</div>
+            </div>
+        </div>
+        <!-- admin_commission Field -->
+        <div class="form-group row ">
+            {!! Form::label('admin_commission', "Comissão do App %", ['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::number('admin_commission', null,  ['class' => 'form-control', 'step'=>'any', 'placeholder'=>  trans("lang.market_admin_commission_placeholder")]) !!}
+                <div class="form-text text-muted">
+                    {{ trans("lang.market_admin_commission_help") }}
+                </div>
+            </div>
+        </div>
+        <!-- bonus Field-->
+        <div class="form-group row ">
+            {!! Form::label('bonus_at', trans("lang.market_bonus"), ['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::date('bonus_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_bonus_placeholder")]) !!}
+                <div class="form-text text-muted">
+                    {{ trans("lang.market_bonus_placeholder") }}
+                </div>
+            </div>
+        </div>
+        <!-- admin_monthly Field -->
+        <div class="form-group row ">
+            {!! Form::label('admin_monthly', "Mensalidade", ['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::number('admin_monthly', null,  ['class' => 'form-control', 'step'=>'any', 'placeholder'=>  trans("lang.market_admin_commission_placeholder")]) !!}
+                <div class="form-text text-muted">
+                    {{ trans("lang.market_admin_monthly_help") }}
+                </div>
+            </div>
+        </div>
+        <!-- fidelity Field-->
+        <div class="form-group row ">
+            {!! Form::label('fidelity_at', trans("lang.market_fidelaty"), ['class' => 'col-3 control-label text-right']) !!}
+            <div class="col-9">
+                {!! Form::date('fidelity_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_fidelaty_placeholder")]) !!}
+                <div class="form-text text-muted">
+                    {{ trans("lang.market_fidelaty_placeholder") }}
+                </div>
+            </div>
+        </div>
+        <!-- exclusive Field-->
+        <div class="form-group row ">
+            {!! Form::label('exclusive', trans("lang.market_exclusive"),['class' => 'col-3 control-label text-left']) !!}
+            <div class="checkbox icheck">
+                <label class="col-9 ml-2 form-check-inline">
+                    {!! Form::hidden('exclusive', 0) !!}
+                    {!! Form::checkbox('exclusive', 1, null) !!}
+                </label>
+            </div>
+        </div>
+        
+
 
         @if(setting('enable_pagarme', false))    
             <h2>Split Pagar.me</h2>        
@@ -424,65 +529,6 @@
             </div>
         @endif
         
-    </div>
-    <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
-        <!-- admin_commission Field -->
-        <div class="form-group row ">
-            {!! Form::label('admin_commission', "Comissão do App %", ['class' => 'col-3 control-label text-right']) !!}
-            <div class="col-9">
-                {!! Form::number('admin_commission', null,  ['class' => 'form-control', 'step'=>'any', 'placeholder'=>  trans("lang.market_admin_commission_placeholder")]) !!}
-                <div class="form-text text-muted">
-                    {{ trans("lang.market_admin_commission_help") }}
-                </div>
-            </div>
-        </div>
-        <div class="form-group row ">
-            {!! Form::label('admin_monthly', "Mensalidade", ['class' => 'col-3 control-label text-right']) !!}
-            <div class="col-9">
-                {!! Form::number('admin_monthly', null,  ['class' => 'form-control', 'step'=>'any', 'placeholder'=>  trans("lang.market_admin_commission_placeholder")]) !!}
-                <div class="form-text text-muted">
-                    {{ trans("lang.market_admin_monthly_help") }}
-                </div>
-            </div>
-        </div>
-        <div class="form-group row ">
-            {!! Form::label('active', trans("lang.market_active"),['class' => 'col-3 control-label text-right']) !!}
-            <div class="checkbox icheck">
-                <label class="col-9 ml-2 form-check-inline">
-                    {!! Form::hidden('active', 0) !!}
-                    {!! Form::checkbox('active', 1, null) !!}
-                </label>
-            </div>
-        </div>
-        <div class="form-group row ">
-            {!! Form::label('exclusive', trans("lang.market_exclusive"),['class' => 'col-3 control-label text-left']) !!}
-            <div class="checkbox icheck">
-                <label class="col-9 ml-2 form-check-inline">
-                    {!! Form::hidden('exclusive', 0) !!}
-                    {!! Form::checkbox('exclusive', 1, null) !!}
-                </label>
-            </div>
-        </div>
-    </div>
-    <!-- fidelity -->
-    <div class="form-group row ">
-        {!! Form::label('fidelity_at', trans("lang.market_fidelaty"), ['class' => 'col-4 control-label text-left']) !!}
-        <div class="col-9">
-            {!! Form::date('fidelity_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_fidelaty_placeholder")]) !!}
-            <div class="form-text text-muted">
-                {{ trans("lang.market_fidelaty_placeholder") }}
-            </div>
-        </div>
-    </div>
-    <!-- bonus -->
-    <div class="form-group row ">
-        {!! Form::label('bonus_at', trans("lang.market_bonus"), ['class' => 'col-6 control-label text-left']) !!}
-        <div class="col-9">
-            {!! Form::date('bonus_at', null,  ['class' => 'form-control','placeholder'=>  trans("lang.market_bonus_placeholder")]) !!}
-            <div class="form-text text-muted">
-                {{ trans("lang.market_bonus_placeholder") }}
-            </div>
-        </div>
     </div>
 </div>
 @endhasrole
