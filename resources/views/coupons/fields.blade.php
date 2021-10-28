@@ -53,32 +53,32 @@
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
 
   <!-- Product Id Field -->
-  <div class="form-group row ">
+{{--   <div class="form-group row ">
     {!! Form::label('products[]', trans("lang.coupon_product_id"),['class' => 'col-3 control-label text-right']) !!}
     <div class="col-9">
       {!! Form::select('products[]', $product, $productsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
       <div class="form-text text-muted">{{ trans("lang.coupon_product_id_help") }}</div>
     </div>
-  </div>
+  </div> --}}
 
 <!-- Market Id Field -->
-<div class="form-group row ">
+{{-- <div class="form-group row ">
   {!! Form::label('markets', trans("lang.coupon_market_id"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
     {!! Form::select('markets[]', $market, $marketsSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
     <div class="form-text text-muted">{{ trans("lang.coupon_market_id_help") }}</div>
   </div>
-</div>
+</div> --}}
 
 
 <!-- Category Id Field -->
-<div class="form-group row ">
+{{-- <div class="form-group row ">
   {!! Form::label('categories[]', trans("lang.coupon_category_id"),['class' => 'col-3 control-label text-right']) !!}
   <div class="col-9">
     {!! Form::select('categories[]', $category, $categoriesSelected, ['class' => 'select2 form-control', 'multiple'=>'multiple']) !!}
     <div class="form-text text-muted">{{ trans("lang.coupon_category_id_help") }}</div>
   </div>
-</div>
+</div> --}}
 
 
 <!-- Expires At Field -->
