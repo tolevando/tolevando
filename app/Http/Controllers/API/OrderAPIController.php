@@ -527,7 +527,6 @@ class OrderAPIController extends Controller
                 $this->productOrderRepository->create($productOrder);
             }
 
-            $amount += $order->delivery_fee;
             if(isset($order->coupon_id) && !empty($order->coupon_id)){
                 $coupon = Coupon::where('id',$order->coupon_id)->first();
                 if(!is_null($coupon)){
@@ -542,7 +541,7 @@ class OrderAPIController extends Controller
                 }
             }
 
-            // $amount += $order->delivery_fee;
+            $amount += $order->delivery_fee;
             $amountWithTax = $amount + ($amount * $order->tax / 100);
             $payment = $this->paymentRepository->create([
                 "user_id" => $input['user_id'],
