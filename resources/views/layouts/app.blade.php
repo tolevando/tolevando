@@ -322,11 +322,40 @@
                 success: function(data){
                     html = "";
                     primeiro = null;
+                    color = "#dc3545";
                     $.each(data,function(i,v){
                         if(primeiro == null){
                             primeiro = v.id;
                         }
-                        html += "<tr>";
+
+                        switch (v.status_id ) {
+                            case 1:
+                                color = "#e05461";
+                                // color = "#dc3545";
+                                break;
+
+                            case 2:
+                                color = "#f6f167";
+                                // color = "#fdc109";
+                                break;
+
+                            case 4:
+                                color = "#50dc6c";
+                                // color = "#2ba744";
+                                break;
+                            
+                            default:
+                                color = "#dc3545";
+                                break;
+                        }
+
+                        if (!v.active) {
+                            color = "#50dc6c";
+                        }
+
+
+
+                        html += "<tr style='background-color: "+color+"'>";
                             html += "<td style='white-space:nowrap'>"+v.data+"</td>";
                             html += "<td>"+v.cliente+"</td>";
                             html += "<td>"+v.status+"</td>";

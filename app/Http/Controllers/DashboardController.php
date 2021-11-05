@@ -112,7 +112,8 @@ class DashboardController extends Controller
                 'metodo_pagamento' => $pedido->payment->method,
                 'produtos' => $produtos,
                 'status_pagamento' => $pedido->payment->status,
-                'valor' => $pedido->payment->price
+                'valor' => $pedido->payment->price,
+                'active' => $pedido->active
             ];
 
             
