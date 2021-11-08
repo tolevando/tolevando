@@ -110,6 +110,10 @@ Route::middleware('auth')->group(function () {
     Route::resource('markets', 'MarketController')->except([
         'show'
     ]);
+    Route::post('markets/opening_hours/delete', 'MarketController@deleteOpeningHours');
+    Route::post('markets/opening_hours/{id}', 'MarketController@saveOpeningHours');
+    Route::post('markets/brand/delete', 'MarketController@deleteBrand');
+    Route::post('markets/brand/{id}', 'MarketController@saveBrands');
 
     Route::post('categories/remove-media', 'CategoryController@removeMedia'); 
     Route::resource('categories', 'CategoryController')->except([
@@ -157,6 +161,9 @@ Route::middleware('auth')->group(function () {
     ]);
 
     Route::resource('orders', 'OrderController');
+
+    Route::post('order/update_order_status/{id}', 'OrderController@updateOrderStatus');
+    Route::post('order/update_reason_cancel_order/{id}', 'OrderController@updateReasonCancelOrder');
 
     Route::resource('notifications', 'NotificationController')->except([
         'create', 'store', 'update','edit',

@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 use Prettus\Validator\Exceptions\ValidatorException;
+use App\Models\Order;
 
 class OrderController extends Controller
 {
@@ -303,5 +304,68 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             Log::error($e->getMessage());
         }
+    }
+
+    public function updateOrderStatus($id, Request $request)
+    {
+        try {
+            $this->orderRepository->pushCriteria(new OrdersOfUserCriteria(auth()->id()));
+            $oldOrder = $this->orderRepository->findWithoutFail($id);
+            if (empty($oldOrder)) {
+                Flash::error(__('lang.not_found', ['operator' => __('lang.order')]));
+                return redirect(route('orders.index'));
+            }
+            $oldStatus = $oldOrder->payment->status;
+
+            $order = Order::find($id);
+            if ($order) {
+
+                $order->order_status_id = 2;
+                if (isset($request->action) && $request->action == 'go_to_delivery') {
+                    $order->order_status_id = 4;
+                }
+
+                $order->save();
+            }
+
+            if (setting('enable_notifications', false)) {
+                if (isset($order->order_status_id) && $order->order_status_id != $oldOrder->order_status_id) {
+                    Notification::send([$order->user], new StatusChangedOrder($order));
+                }
+
+                if (isset($order->driver_id) && ($order->driver_id != $oldOrder['driver_id'])) {
+                    $driver = $this->userRepository->findWithoutFail($order->driver_id);
+                    if (!empty($driver)) {
+                        Notification::send([$driver], new AssignedOrder($order));
+                    }
+                }
+            }
+
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Pedido atualizado com sucesso!' ];
+    }
+
+    public function updateReasonCancelOrder($id, Request $request)
+    {
+        try {
+            $order = Order::find($id);
+            if ($order) {
+                $order->active = 0;
+                $order->reason_cancel = $request->reason_cancel;
+                $order->save();
+            }
+
+            if (setting('enable_notifications', false)) {
+                Notification::send([$order->user], new StatusChangedOrder($order, true));
+            }
+
+        } catch (\Exception $e) {
+            return ['statusCode' => 500, 'msg' => $e->getMessage() ];
+        }
+
+        return ['statusCode' => 200, 'msg' => 'Pedido atualizado com sucesso!' ];
     }
 }

@@ -28,10 +28,11 @@ class StatusChangedOrder extends Notification
      *
      * @return void
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, $is_cancel = false)
     {
         //
         $this->order = $order;
+        $this->is_cancel = $is_cancel;
     }
 
     /**
@@ -62,8 +63,9 @@ class StatusChangedOrder extends Notification
     public function toFcm($notifiable)
     {
         $message = new FcmMessage();
+        $status = $this->is_cancel ? 'Cancelado' : $this->order->orderStatus->status;
         $notification = [
-            'title' => trans('lang.notification_your_order', ['order_id' => $this->order->id, 'order_status' => $this->order->orderStatus->status]),
+            'title' => trans('lang.notification_your_order', ['order_id' => $this->order->id, 'order_status' => $status]),
             'text' => $this->order->productOrders[0]->product->market->name,
             'image' => $this->order->productOrders[0]->product->market->getFirstMediaUrl('image', 'thumb')
         ];

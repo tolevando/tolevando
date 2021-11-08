@@ -49,7 +49,9 @@ class Order extends Model
         'troco_para',
         'active',
         'driver_id',
-        'coupon_id'
+        'coupon_id',
+        'reason_cancel',
+        'card_brand'
     ];
 
     /**
@@ -70,7 +72,9 @@ class Order extends Model
         'troco_para'=>'double',
         'active'=>'boolean',
         'driver_id' => 'integer',        
-        'data_hora' => 'string'
+        'data_hora' => 'string',
+        'reason_cancel' => 'string',
+        'card_brand' => 'string'
     ];
 
     /**

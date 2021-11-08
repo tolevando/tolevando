@@ -20,6 +20,21 @@
     <p>{!! $order->deliveryAddress ? $order->deliveryAddress->address : 'Não há. Cliente optou por retirar' !!}</p>
   </div>
 
+    {!! Form::label('number', 'Número residencial', ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+    <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->number ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
+  </div>
+
+    {!! Form::label('bairro', 'Bairro', ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+    <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->bairro ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
+  </div>
+
+    {!! Form::label('complemento', 'Complemento', ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+    <p>{!! $order->deliveryAddress ? ($order->deliveryAddress->complement ? : '-') : 'Não há. Cliente optou por retirar' !!}</p>
+  </div>
+
     {!! Form::label('order_date', trans('lang.order_date'), ['class' => 'col-4 control-label']) !!}
     <div class="col-8">
     <p>{!! $order->created_at->format('d/m/Y H:i:s') !!}</p>
@@ -29,6 +44,13 @@
     {!! Form::label('data_hora', "Data Agendada", ['class' => 'col-4 control-label']) !!}
     <div class="col-8">
       <p>{!! $order->data_hora !!}</p>
+    </div>
+  @endif  
+
+  @if($order->active == 0 && $order->reason_cancel)
+    {!! Form::label('reason_cancel', "Motivo Cancelamento", ['class' => 'col-4 control-label']) !!}
+    <div class="col-8">
+      <p>{!! $order->reason_cancel !!}</p>
     </div>
   @endif
 
@@ -110,6 +132,15 @@
         <p>{!! $order->observacao !!}</p>
     </div>
     
+    @if($order->payment->method == 'Cartão de Crédito na Entrega' || $order->payment->method == 'Cartão de Débito na Entrega')
+    
+        {!! Form::label('card_brand', 'Bandeira do Cartão', ['class' => 'col-4 control-label']) !!}
+        <div class="col-8">
+            <p>{!! $order->card_brand??'-' !!}</p>
+        </div>
+
+    @endif
+
     {!! Form::label('troco_para', 'Troco para', ['class' => 'col-4 control-label']) !!}
     <div class="col-8">
         <p>{!! $order->troco_para??'-' !!}</p>

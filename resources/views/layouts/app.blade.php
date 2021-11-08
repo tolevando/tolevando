@@ -67,6 +67,11 @@
 
 
 </script>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="sweetalert2.min.js"></script>
+<link rel="stylesheet" href="sweetalert2.min.css">
+
     @yield('css_custom')
     <link rel="manifest" href="./manifest.json">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -303,7 +308,7 @@
     var quantidadePedidosAnterior = null;
     var sonsAtivados = false;
     $(function () {
-        var audio = new Audio('{{url("nova_notification.mp3")}}');        
+        var audio = new Audio('{{ asset('notification_sounds/order.mp3') }}');        
         audio.play();
         audio.pause();
         function ajaxBuscaUltimosPedidos(){
@@ -317,11 +322,40 @@
                 success: function(data){
                     html = "";
                     primeiro = null;
+                    color = "#dc3545";
                     $.each(data,function(i,v){
                         if(primeiro == null){
                             primeiro = v.id;
                         }
-                        html += "<tr>";
+
+                        switch (v.status_id ) {
+                            case 1:
+                                color = "#e05461";
+                                // color = "#dc3545";
+                                break;
+
+                            case 2:
+                                color = "#f6f167";
+                                // color = "#fdc109";
+                                break;
+
+                            case 4:
+                                color = "#50dc6c";
+                                // color = "#2ba744";
+                                break;
+                            
+                            default:
+                                color = "#dc3545";
+                                break;
+                        }
+
+                        if (!v.active) {
+                            color = "#50dc6c";
+                        }
+
+
+
+                        html += "<tr style='background-color: "+color+"'>";
                             html += "<td style='white-space:nowrap'>"+v.data+"</td>";
                             html += "<td>"+v.cliente+"</td>";
                             html += "<td>"+v.status+"</td>";
@@ -329,16 +363,19 @@
                             html += "<td>"+v.produtos+"</td>";
                             html += "<td>"+v.status_pagamento+"</td>";
                             html += "<td>"+v.valor+"</td>";
-                            html += "<td><a href='/orders/"+v.id+"' class='btn btn-sm btn-primary' target='__blank'>Visualizar</a></td>";
+                            html += "<td><a href='/orders/"+v.id+"' class='btn btn-sm btn-primary' onclick='window.location.reload(true);' target='_blank'>Visualizar</a></td>";
                         html += "</tr>";
                     });
                     $('#listaUltimosPedidos').html(html);                    
 
                     if(primeiro!=null && quantidadePedidosAnterior != null){
                         if(quantidadePedidosAnterior != primeiro){
-                            
+                                console.log('TOCANDO NOTIFICAÇÃO');
                                 audio.play();
-                            
+
+                                setInterval(function() {
+                                    audio.play();
+                                }, 2500);
                         }
                     }  
                     quantidadePedidosAnterior = primeiro;

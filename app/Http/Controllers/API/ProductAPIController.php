@@ -103,7 +103,7 @@ class ProductAPIController extends Controller
             $this->productRepository->pushCriteria(new ProductsOfFieldsCriteria($request));
             $this->productRepository->pushCriteria(new ProductsOfCategoriesCriteria($request));
 
-            $products = $this->productRepository->all();
+            $products = $this->productRepository->orderBy('name')->get();
 
         } catch (RepositoryException $e) {
             return $this->sendError($e->getMessage());

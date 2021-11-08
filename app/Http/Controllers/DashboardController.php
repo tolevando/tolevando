@@ -112,7 +112,8 @@ class DashboardController extends Controller
                 'metodo_pagamento' => $pedido->payment->method,
                 'produtos' => $produtos,
                 'status_pagamento' => $pedido->payment->status,
-                'valor' => $pedido->payment->price
+                'valor' => $pedido->payment->price,
+                'active' => $pedido->active
             ];
 
             
@@ -190,10 +191,13 @@ class DashboardController extends Controller
             
             $this->marketRepository->pushCriteria(new MarketsOfUserCriteria(auth()->id()));
             $market = $this->marketRepository->orderBy('id','desc')->first();
+            // $markets = $this->marketRepository->orderBy('id','desc')->get();
 
+            // foreach ($markets as $key => $market) {
             $market->closed = !$aberto;
             $market->available_for_delivery = $delivery;
             $market->save();
+            // }
             
             return ['success' => 1];        
         }

@@ -24,6 +24,28 @@
   </div>
 </div>
 
+<!-- Bairro Field -->
+<div class="form-group row ">
+  {!! Form::label('bairro', 'Bairro', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('bairro', null,  ['class' => 'form-control','placeholder'=>  'Digite o bairro']) !!}
+    <div class="form-text text-muted">
+      {{ 'Digite o bairro' }}
+    </div>
+  </div>
+</div>
+
+<!-- Complement Field -->
+<div class="form-group row ">
+  {!! Form::label('complement', 'Complemento', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('complement', null,  ['class' => 'form-control','placeholder'=>  'Digite o complemento']) !!}
+    <div class="form-text text-muted">
+      {{ 'Digite o complemento' }}
+    </div>
+  </div>
+</div>
+
 <!-- Latitude Field -->
 <div class="form-group row ">
   {!! Form::label('latitude', trans("lang.delivery_address_latitude"), ['class' => 'col-3 control-label text-right']) !!}
@@ -48,6 +70,17 @@
   </div>
 </div>
 
+<!-- Number Field -->
+<div class="form-group row ">
+  {!! Form::label('number', 'Número residencial', ['class' => 'col-3 control-label text-right']) !!}
+  <div class="col-9">
+    {!! Form::text('number', null,  ['class' => 'form-control','placeholder'=>  'Digite o número']) !!}
+    <div class="form-text text-muted">
+      {{ 'Digite o número' }}
+    </div>
+  </div>
+</div>
+
 <!-- 'Boolean Is Default Field' -->
 <div class="form-group row ">
   {!! Form::label('is_default', trans("lang.delivery_address_is_default"),['class' => 'col-3 control-label text-right']) !!}
@@ -68,6 +101,7 @@
     <div class="form-text text-muted">{{ trans("lang.delivery_address_user_id_help") }}</div>
   </div>
 </div>
+
 
 </div>
 @if($customFields)

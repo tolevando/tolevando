@@ -476,20 +476,57 @@ class OrderAPIController extends Controller
         $amount = 0;
         try {
             $order = $this->orderRepository->create(
-                $request->only('user_id', 'order_status_id', 'tax', 'delivery_address_id', 'delivery_fee', 'hint','observacao','troco_para','bairro_id','coupon_id','data_hora')
+                $request->only('user_id', 'order_status_id', 'tax', 'delivery_address_id', 'delivery_fee', 'hint','observacao','troco_para','bairro_id','coupon_id','data_hora', 'card_brand')
             );
             //Log::info($input['products']);
             foreach ($input['products'] as $productOrder) {
                 $productOrder['order_id'] = $order->id;                
 
+                $optionMidPizza = Product::find($productOrder['product_id'])->option_mid_pizza;      
+                $firstOptionValue =  0;
+                $counter = 0;         
                 foreach($productOrder['options'] as $keyOption => $valueOption){
                     $option = Option::where('id','=',$valueOption)->first();
-                    $productOrder['price'] += $option->price??0;                    
+
+                    switch ($optionMidPizza) {
+                        case 0:
+                            $productOrder['price'] += $option->price??0;
+                            break;
+                        case 1:
+                            $counter += 1;
+
+                            if ($counter < 3) {
+                                $productOrder['price'] += $option->price ? ($option->price / 2) : 0;
+                            }else {
+                                $productOrder['price'] += $option->price??0;
+                            }
+
+                            break;
+                        case 2:
+                            if ($counter == 0) {
+                                $firstOptionValue = $option->price??0;
+                            }
+
+                            $counter += 1;
+
+                            if ($counter < 3) {
+                                $productOrder['price'] = (($firstOptionValue > $option->price) ? $firstOptionValue : $option->price);
+                            }else {
+                                $productOrder['price'] += $option->price??0;
+                            }
+
+                            break;
+                        
+                        default:
+                            $productOrder['price'] += $option->price??0;
+                            break;
+                    }
                 }
                 $amount += $productOrder['price'] * $productOrder['quantity'];
 
                 $this->productOrderRepository->create($productOrder);
             }
+
             if(isset($order->coupon_id) && !empty($order->coupon_id)){
                 $coupon = Coupon::where('id',$order->coupon_id)->first();
                 if(!is_null($coupon)){

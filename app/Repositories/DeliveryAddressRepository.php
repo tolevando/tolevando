@@ -22,6 +22,9 @@ class DeliveryAddressRepository extends BaseRepository
     protected $fieldSearchable = [
         'description',
         'address',
+        'number',
+        'bairro',
+        'complement',
         'latitude',
         'longitude',
         'is_default',

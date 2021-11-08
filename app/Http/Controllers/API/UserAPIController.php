@@ -55,17 +55,10 @@ class UserAPIController extends Controller
                 $deviceToken = $request->input('device_token', '');
 
                 if(!empty($deviceToken)){
-                    //checa se o token já esta registrado
-                    $tokens = explode(';|||;',$user->device_token);
-                    $encontrou = false;
-                    foreach($tokens as $token){
-                        if($token == $deviceToken){
-                            $encontrou = true;
-                        }
-                    }
-                    if(!$encontrou){
-                        $user->device_token .= ';|||;'.$deviceToken;
-                    }                                        
+
+                    if($user->device_token != $deviceToken){
+                        $user->device_token = $deviceToken;
+                    }                                       
                 }                
                 $user->save();
                 return $this->sendResponse($user, 'User retrieved successfully');

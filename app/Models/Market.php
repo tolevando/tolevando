@@ -93,6 +93,8 @@ class Market extends Model implements HasMedia
         'fidelity_at',
         'bonus_at',
         'type_of_plan',
+        'estimated_time_get_product',
+        'estimated_time_delivery',
     ];
 
     /**
@@ -129,6 +131,8 @@ class Market extends Model implements HasMedia
         'fidelity_at' => 'string',
         'bonus_at' => 'string',
         'type_of_plan' => 'string'
+        'estimated_time_get_product' => 'string',
+        'estimated_time_delivery' => 'string',
     ];
 
     /**
@@ -248,6 +252,22 @@ class Market extends Model implements HasMedia
     public function products()
     {
         return $this->hasMany(\App\Models\Product::class, 'market_id');
+    }    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function openingHourMarket()
+    {
+        return $this->hasMany(\App\Models\OpeningHourMarket::class, 'market_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     **/
+    public function brandMarket()
+    {
+        return $this->hasMany(\App\Models\BrandMarket::class, 'market_id');
     }
 
     /**

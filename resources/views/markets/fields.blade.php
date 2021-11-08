@@ -1,6 +1,7 @@
 @if($customFields)
     <h5 class="col-12 pb-4">{!! trans('lang.main_fields') !!}</h5>
 @endif
+
 <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
     <!-- Name Field -->
     <div class="form-group row ">
@@ -129,6 +130,25 @@
             </div>
         </div>
     </div>
+
+    <!-- Estimated Time Get Product Field -->
+    <div class="form-group row">
+        {!! Form::label('estimated_time_get_product', "Tempo estimado para retirada",['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('estimated_time_get_product', ['' => 'Selecione uma estimativa', '10-30 min' => '10-30 min', '30-50 min' => '30-50 min', '50-110 min' => '50-110 min', '130-160 min' => '130-160 min'], $market->estimated_time_get_product??null, ['class' => 'select2 form-control']) !!}
+            <div class="form-text text-muted">Selecione uma estimativa</div>
+        </div>
+    </div>
+
+    <!-- Estimated Time Delivery Field -->
+    <div class="form-group row">
+        {!! Form::label('estimated_time_delivery', "Tempo estimado para delivery",['class' => 'col-3 control-label text-right']) !!}
+        <div class="col-9">
+            {!! Form::select('estimated_time_delivery', ['' => 'Selecione uma estimativa', '10-30 min' => '10-30 min', '30-50 min' => '30-50 min', '50-110 min' => '50-110 min', '130-160 min' => '130-160 min'], $market->estimated_time_delivery??null, ['class' => 'select2 form-control']) !!}
+            <div class="form-text text-muted">Selecione uma estimativa</div>
+        </div>
+    </div>
+
     <!-- 'Boolean closed Field' -->
     <div class="form-group row ">
         {!! Form::label('closed', trans("lang.market_closed"),['class' => 'col-3 control-label text-right']) !!}
@@ -342,6 +362,109 @@
 
 </div>
 
+@if(isset($market))
+<div class="col-12 custom-field-container">
+    <div style="flex: 90%;max-width: 50%;padding: 0 4px;" class="column">
+        <h5 class="col-12 pb-4">Horário De Funcionamento</h5>
+    </div>
+    @if(isset($market->openingHourMarket) && count($market->openingHourMarket) < 7)
+        <div style="flex: 10%;max-width: 50%;padding: 0 2px;" class="column">
+            <div class="alert alert-info" data-toggle="modal" data-target="#ticket_modal">
+                <i class="fa fa-plus" style="margin-right: 7px;"></i> Adicionar novo horário de funcionamento
+            </div>
+        </div>
+    @endif
+    <div style="flex: 100%;max-width: 100%;padding: 0 4px;" class="column">
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th width="200">Dia da Semana</th>
+                    <th width="100">Horário de Abertura</th>
+                    <th width="100">Horário de Fechamento</th>
+                    <th width="100">Horário de Abertura Turno 2</th>
+                    <th width="100">Horário de Fechamento Turno 2</th>                
+                    <th width="200">Abertura/Fechamento Automatizado</th>                    
+                    <th width="80"></th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @if(isset($market->openingHourMarket) && count($market->openingHourMarket))
+                    @foreach($market->openingHourMarket as $hour)
+                        <tr>
+                            <td>{{ $hour->day }}</td>
+                            <td>{{ $hour->open_hour }}</td>
+                            <td>{{ $hour->close_hour }}</td>
+                            <td>{{ isset($hour->open_hour_second) ? $hour->open_hour_second : '-' }}</td>
+                            <td>{{ isset($hour->close_hour_second) ? $hour->close_hour_second : '-' }}</td>
+                            <td>{{ $hour->automatic_open_close ? 'Sim' : 'Não' }}</td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" data-toggle="modal" data-target="#ticket_modal" onclick="populateForm({{$hour}})">
+                                    <i class="fa fa-edit" style="margin-right: 10px; margin-left: 10px;"></i>
+                                </a>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" onclick="deleteOpeningHour({{ $hour->id }})">
+                                    <i class="fa fa-trash" style="margin-left: 10px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr style="background-color: rgba(0, 0, 0, 0.05)">
+                        <td colspan='5' style='text-align:center'>Não existem registros a serem mostrados</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
+@if(isset($market))
+<div class="col-12 custom-field-container">
+    <div style="flex: 90%;max-width: 50%;padding: 0 4px;" class="column">
+        <h5 class="col-12 pb-4">Bandeira de Cartão</h5>
+    </div>
+    <div style="flex: 10%;max-width: 50%;padding: 0 2px;" class="column">
+        <div class="alert alert-info" data-toggle="modal" data-target="#brand_modal">
+            <i class="fa fa-plus" style="margin-right: 7px;"></i> Adicionar nova bandeira de cartão
+        </div>
+    </div>
+    <div style="flex: 100%;max-width: 100%;padding: 0 4px;" class="column">
+        
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th width="200">Bandeira</th>
+                    <th width="80"></th>                    
+                </tr>
+            </thead>
+            <tbody>
+                @if(isset($market->brandMarket) && count($market->brandMarket))
+                    @foreach($market->brandMarket as $brand)
+                        <tr>
+                            <td>{{ $brand->brand }}</td>
+                            <td>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" data-toggle="modal" data-target="#brand_modal" onclick="populateFormBrand({{$brand}})">
+                                    <i class="fa fa-edit" style="margin-right: 10px; margin-left: 10px;"></i>
+                                </a>
+                                <a href="javascript:void(0)" class="btn btn-styled btn-link py-1 px-0 icon-anim text-underline--none" onclick="deleteBrand({{ $brand->id }})">
+                                    <i class="fa fa-trash" style="margin-left: 10px;"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr style="background-color: rgba(0, 0, 0, 0.05)">
+                        <td colspan='5' style='text-align:center'>Não existem registros a serem mostrados</td>
+                    </tr>
+                @endif
+            </tbody>
+        </table>
+    </div>
+</div>
+@endif
+
+
 <div class="col-12 custom-field-container">
     <div style="flex: 50%;max-width: 50%;padding: 0 4px;" class="column">
         <h5 class="col-12 pb-4">Valores customizados por bairro</h5>
@@ -544,4 +667,131 @@ $(document).ready(function(){
 <div class="form-group col-12 text-right">
     <button type="submit" class="btn btn-{{setting('theme_color')}}"><i class="fa fa-save"></i> {{trans('lang.save')}} {{trans('lang.market')}}</button>
     <a href="{!! route('markets.index') !!}" class="btn btn-default"><i class="fa fa-undo"></i> {{trans('lang.cancel')}}</a>
+</div>
+
+<div class="modal fade" id="ticket_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
+        <div class="modal-content position-relative">
+            <div class="modal-header">
+                <h5 class="modal-title strong-600 heading-5">{{__('Adicionar um horário de funcionamento')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-3 pt-3">
+                <form id="one" action="#" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group" id="divDay">
+
+                        @php
+                            if (isset($market)) {
+                                $selectDayWeek = \DB::table('opening_hour_markets')->where('market_id', $market->id)->pluck('day');
+                                $dayWeek = $selectDayWeek->toArray();
+                            }
+                        @endphp
+                        <div class="col-md-12" align="center">
+                            <label>Turno 1</label>
+                        </div>
+                        <label for="dayWeek">Dia da semana <span class="text-danger">*</span></label>
+                        <select class="form-control" id="day" name="day">
+                            <option disabled="" selected="" value="">Selecione</option>
+                            @if(!isset($dayWeek) || !in_array("Segunda-feira", $dayWeek))
+                                <option value="Segunda-feira">Segunda-feira</option>
+                            @endif
+                            
+                            @if(!isset($dayWeek) || !in_array("Terça-feira", $dayWeek))
+                                <option value="Terça-feira">Terça-feira</option>
+                            @endif
+                            
+                            @if(!isset($dayWeek) || !in_array("Quarta-feira", $dayWeek))
+                                <option value="Quarta-feira">Quarta-feira</option>
+                            @endif
+                            
+                            @if(!isset($dayWeek) || !in_array("Quinta-feira", $dayWeek))
+                                <option value="Quinta-feira">Quinta-feira</option>
+                            @endif
+
+                            @if(!isset($dayWeek) || !in_array("Sexta-feira", $dayWeek))
+                                <option value="Sexta-feira">Sexta-feira</option>
+                            @endif
+
+                            @if(!isset($dayWeek) || !in_array("Sábado", $dayWeek))
+                                <option value="Sábado">Sábado</option>
+                            @endif
+
+                            @if(!isset($dayWeek) || !in_array("Domingo", $dayWeek))
+                                <option value="Domingo">Domingo</option>
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group" style="display: none;" id="divEditDay">
+                        <label>Dia da semana <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control mb-3" id="dayWeek" name="dayWeek" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Horário de abertura <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control mb-3" name="open_hour" id="open_hour" placeholder="Horário de abertura"  step="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário de fechamento <span class="text-danger">*</span></label>
+                        <input type="time" class="form-control mb-3" name="close_hour" id="close_hour" placeholder="Horário de fechamento"  step="1">
+                    </div>
+                    <div class="col-md-12" align="center">
+                        <label>Turno 2</label><br>
+                        <span class="text-danger">* Preencher somente se houver dois turnos</span>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <label>Horário de abertura</label>
+                        <input type="time" class="form-control mb-3" name="open_hour_second" id="open_hour_second" placeholder="Horário de abertura"  step="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Horário de fechamento</label>
+                        <input type="time" class="form-control mb-3" name="close_hour_second" id="close_hour_second" placeholder="Horário de fechamento"  step="1">
+                    </div>
+                    <div class="form-group custom-control custom-checkbox box-client-mobile">
+                        <input type="hidden" id="everyday" name="everyday" value="">
+                        <input type="checkbox" class="custom-control-input" id="scales" onclick="everydayOption()">
+                        <label for="scales" class="custom-control-label" style="padding-top: 2px">Abertura/Fechamento Automático</label>
+                    </div>
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">{{__('Cancelar')}}</button>
+                        <button type="button" class="btn btn-base-1" onclick="validateForm()">{{__('Adicionar')}}</button>
+                    </div>
+                    <input type="hidden" id="id_opening_hours" name="id_opening_hours" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="brand_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom product-modal" id="modal-size" role="document">
+        <div class="modal-content position-relative">
+            <div class="modal-header">
+                <h5 class="modal-title strong-600 heading-5">{{__('Adicionar bandeira de cartão')}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="resetForm()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body px-3 pt-3">
+                <form id="one" action="#" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group" id="divDay">
+                    
+                    <div class="form-group">
+                        <label>Bandeira do cartão<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control mb-3" name="brand" id="brand" placeholder="Digite a bandeira do cartão"  step="1">
+                    </div>
+                    
+                    <div class="text-right mt-4">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetFormBrand()">{{__('Cancelar')}}</button>
+                        <button type="button" class="btn btn-base-1" onclick="validateFormBrand()">{{__('Adicionar')}}</button>
+                    </div>
+                    <input type="hidden" id="id_market_brand" name="id_market_brand" value="">
+                </form>
+            </div>
+        </div>
+    </div>
 </div>

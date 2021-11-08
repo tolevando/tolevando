@@ -90,6 +90,11 @@ class DeliveryAddressDataTable extends DataTable
   
 ],
             [
+  'data' => 'number',
+  'title' => 'Número',
+  
+],
+            [
   'data' => 'is_default',
   'title' => trans('lang.delivery_address_is_default'),
   
